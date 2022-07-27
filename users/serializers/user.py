@@ -3,7 +3,6 @@ from asyncio import exceptions
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-from pkg_resources import _
 from rest_framework import serializers
 
 
@@ -57,13 +56,13 @@ class AuthCustomTokenSerializer(serializers.Serializer):
 
             if user:
                 if not user.is_active:
-                    msg = _('User account is disabled.')
+                    msg = ('User account is disabled.',)
                     raise exceptions.ValidationError(msg)
             else:
-                msg = _('Unable to log in with provided credentials.')
+                msg = ('Unable to log in with provided credentials.',)
                 raise exceptions.ValidationError(msg)
         else:
-            msg = _('Must include "email or username" and "password"')
+            msg = ('Must include "email or username" and "password"',)
             raise exceptions.ValidationError(msg)
 
         attrs['user'] = user
