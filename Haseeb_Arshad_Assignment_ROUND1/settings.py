@@ -137,9 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 PROJECT_ROOT = os.path.join(Path(__file__).resolve().parent)
-print(PROJECT_ROOT)
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-print(STATIC_ROOT)
 STATIC_URL = '/static/'
 
 # Extra lookup directories for collectstatic to find static files
