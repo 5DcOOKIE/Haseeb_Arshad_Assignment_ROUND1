@@ -1,0 +1,1 @@
+web: gunicorn Haseeb_Arshad_Assignment_ROUND1.wsgi --log-file -
