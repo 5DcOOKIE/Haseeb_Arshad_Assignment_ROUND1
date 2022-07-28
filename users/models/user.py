@@ -48,7 +48,7 @@ class User(AbstractUser):
 
     gender = models.CharField(max_length=20, null=True, blank=True)
     email = models.EmailField(_('email address'), unique=True)
-    role = models.IntegerField(choices=Role.choices)
+    role = models.IntegerField(choices=Role.choices, default=Role.Admin.value)
     phone = models.CharField(max_length=20, null=True, blank=True)
     address = models.TextField(null=True, blank=True)
     USERNAME_FIELD = 'email'
