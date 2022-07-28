@@ -39,8 +39,9 @@ class LoginAPI(generics.GenericAPIView):
         user = serializer.validated_data
         user_obj = User.objects.get(username=user['email'])
         token = AuthToken.objects.create(user_obj)[1]
-
+        user = UserSerializer(user_obj).data
         return Response({
-            "user_id": UserSerializer(user_obj).data['id'],  # Get serialized User data
+            "user_id": user['id'],  # Get serialized User data
+            "username": user['email'],
             "token": token
         })
