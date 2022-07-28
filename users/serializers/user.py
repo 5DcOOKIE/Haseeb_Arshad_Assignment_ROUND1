@@ -1,17 +1,18 @@
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
+from users.models.user import User
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
 from rest_framework.exceptions import ValidationError
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'first_name', 'last_name', 'is_staff', 'username')
+        fields = ('id', 'email', 'first_name', 'last_name', 'is_staff', 'username', 'gender')
 
 
 # Register Serializer

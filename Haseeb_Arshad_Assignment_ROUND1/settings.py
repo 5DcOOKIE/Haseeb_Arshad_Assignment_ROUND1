@@ -159,3 +159,5 @@ DATABASES['default'].update(prod_db)
 REST_KNOX = {
     'USER_SERIALIZER': 'knox.serializers.UserSerializer',
 }
+
+AUTH_USER_MODEL = 'users.User'

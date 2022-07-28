@@ -1,9 +1,11 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from knox.models import AuthToken
 from rest_framework import viewsets, generics
 from rest_framework.response import Response
 
 from users.serializers.user import UserSerializer, RegisterSerializer, LoginSerializer
+
+User = get_user_model()
 
 
 # ViewSets define the view behavior.
