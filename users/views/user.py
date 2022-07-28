@@ -42,7 +42,5 @@ class LoginAPI(generics.GenericAPIView):
         user = UserSerializer(user_obj).data
         return Response({
             "user_id": user['id'],  # Get serialized User data
-            "username": user['email'],
-            "email": user['email'],
             "token": token
         })
