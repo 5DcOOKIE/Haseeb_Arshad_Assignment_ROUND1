@@ -1,12 +1,9 @@
-from django.contrib.auth import login
 from django.contrib.auth.models import User
 from knox.models import AuthToken
-from knox.views import LoginView as KnoxLoginView
-from rest_framework import viewsets, generics, permissions
-from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework import viewsets, generics
 from rest_framework.response import Response
 
-from users.serializers.user import UserSerializer, RegisterSerializer, AuthCustomTokenSerializer
+from users.serializers.user import UserSerializer, RegisterSerializer, LoginSerializer
 
 
 # ViewSets define the view behavior.
@@ -33,16 +30,17 @@ class RegisterAPI(generics.GenericAPIView):
         return []
 
 
-class LoginAPI(KnoxLoginView):
-    permission_classes = (permissions.AllowAny,)
+class LoginAPI(generics.GenericAPIView):
+    serializer_class = LoginSerializer
 
-    def post(self, request, format=None):
-        serializer = AuthCustomTokenSerializer(data=request.data)
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        login(request, user)
-        return super(LoginAPI, self).post(request, format=None)
+        user = serializer.validated_data
+        user_obj = User.objects.get(username=user['email'])
+        token = AuthToken.objects.create(user_obj)[1]
 
-    @classmethod
-    def get_extra_actions(cls):
-        return []
+        return Response({
+            "user_id": UserSerializer(user_obj).data['id'],  # Get serialized User data
+            "token": token
+        })
