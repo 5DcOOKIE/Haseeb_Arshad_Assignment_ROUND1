@@ -14,7 +14,6 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-# Register API
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
 
@@ -44,6 +43,6 @@ class LoginAPI(generics.GenericAPIView):
         token = AuthToken.objects.create(user_obj)[1]
         user = UserSerializer(user_obj).data
         return Response({
-            "user_id": user['id'],  # Get serialized User data
+            "user_id": user['id'],
             "token": token
         })
